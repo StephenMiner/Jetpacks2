@@ -4,7 +4,7 @@ lore:
   - "Click to toggle on/off"
 attributes:
   - "generic.armor,10,hand"
-jetpack-id: "test"
+jetpack-item: true
 activation-type: "right_click"
 slots:
   - "hand"

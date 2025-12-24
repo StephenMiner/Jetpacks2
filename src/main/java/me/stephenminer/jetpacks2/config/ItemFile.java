@@ -72,4 +72,6 @@ public class ItemFile {
             //this.plugin.saveResource(file + ".yml", false);
         }
     }
+
+    public String fileName(){ return file; }
 }

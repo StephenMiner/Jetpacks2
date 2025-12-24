@@ -142,7 +142,7 @@ public class ItemBuilder {
     public ItemStack construct(ItemFile file){
         Material mat = Material.FEATHER;
         if (file.getConfig().contains("material"))
-            mat = materialFromString(file.getConfig().getString("material"));
+            mat = plugin.materialFromString(file.getConfig().getString("material"));
         if (mat == null) mat = Material.FEATHER;
         ItemStack item = new ItemStack(mat);
         ItemMeta meta = item.getItemMeta();
@@ -180,24 +180,7 @@ public class ItemBuilder {
         return item;
     }
 
-    @Nullable
-    public Material materialFromString(String str){
-        str = str.toLowerCase().strip();
-        Material mat = null;
-        try {
-            mat = Registry.MATERIAL.get(NamespacedKey.minecraft(str.toLowerCase().trim()));
-        }catch (Exception e){
-            plugin.getLogger().info("Failed to get minecraft namespace for " + str +  ", attempting generic namespace generation");
-        }
-        if (mat == null){
-            NamespacedKey key = NamespacedKey.fromString(str);
-            mat = Registry.MATERIAL.get(key);
-        }
-        if (mat == null){
-            plugin.getLogger().warning("Failed to generate material from: " + str );
-        }
-        return mat;
-    }
+
 
 
 }
