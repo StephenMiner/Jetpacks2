@@ -4,7 +4,6 @@ import me.stephenminer.jetpacks2.Jetpacks2;
 import me.stephenminer.jetpacks2.jetpack.ActivationType;
 import me.stephenminer.jetpacks2.jetpack.JetpackController;
 import me.stephenminer.jetpacks2.jetpack.JetpackData;
-import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,13 +33,11 @@ public class JetpackListener implements Listener {
     public void clickActivation(PlayerInteractEvent event){
         if (!event.hasItem() || event.getAction() == Action.PHYSICAL) return;
         Player player = event.getPlayer();
-        controller.t(player);
         boolean found = false;
         boolean left = event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_AIR;
         if (player.isSneaking())
             found = activateJetpack(player, left ? ActivationType.SHIFT_LEFT_CLICK : ActivationType.SHIFT_RIGHT_CLICK);
         else found = activateJetpack(player, left ? ActivationType.LEFT_CLICK : ActivationType.RIGHT_CLICK);
-
         if (found)
             event.setCancelled(true);
     }
