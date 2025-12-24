@@ -11,6 +11,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -57,8 +58,11 @@ public final class Jetpacks2 extends JavaPlugin {
     public void createJetpackRecords(){
         File itemDirectory = new File(this.getDataFolder(), "items");
         boolean pass = itemDirectory.exists();
-        if (!pass)
+        if (!pass) {
             pass = itemDirectory.mkdirs();
+            this.saveResource("items/test.yml",true);
+            this.saveResource("items/test-fuel.yml", true);
+        }
         if (!pass){
             this.getLogger().warning("Something went wrong loading items directory");
             return;
