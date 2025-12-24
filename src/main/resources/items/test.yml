@@ -1,0 +1,16 @@
+name: "test"
+material: "minecraft:phantom_membrane"
+lore:
+  - "Click to toggle on/off"
+attributes:
+  - "generic.armor,10,hand"
+jetpack-id: "test"
+activation-type: "click"
+slots:
+  - "hand"
+  - "offhand"
+max-fuel: 500
+consumption: 1
+thrust: 0.75
+max-y-velocity: 2
+uses-fuel: "minecraft:coal"

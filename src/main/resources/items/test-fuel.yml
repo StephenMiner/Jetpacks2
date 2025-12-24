@@ -1,0 +1,7 @@
+name: "test fuel"
+material: "minecraft:coal"
+generic: true
+lore:
+  - "test fuel"
+fuel-amount: 25
+id: "test"
