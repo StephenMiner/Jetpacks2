@@ -5,20 +5,19 @@ lore:
 attributes:
   - "generic.armor,10,hand"
 jetpack-id: "test"
-activation-type: "click"
+activation-type: "right_click"
 slots:
   - "hand"
-  - "offhand"
 max-fuel: 500
 consumption: 1
-thrust: 0.75
+thrust: 1.25
 max-y-velocity: 2
 uses-fuel: "minecraft:coal"
 effect:
   weighted: true
   particles:
-    - "FLAME,1,2"
-    - "SMOKE,1,1"
+    - "FLAME,0,2"
+    - "SMOKE_NORMAL,0,1"
   has-sound: true
   sound: "minecraft:block.blastfurnace.fire_crackle"
   vol: 1

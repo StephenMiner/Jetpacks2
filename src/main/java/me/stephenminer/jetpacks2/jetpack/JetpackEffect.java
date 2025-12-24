@@ -11,6 +11,7 @@ public record JetpackEffect (Sound sound, float vol, float pitch, boolean hasSou
 
 
     public void playParticle(Location loc){
+        if (particles.length < 1) return;
         final World world = loc.getWorld();
         if (weighted){
             float total = 0;
