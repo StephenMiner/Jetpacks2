@@ -9,7 +9,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public record JetpackData(String id, double thrust, double maxYVelocity, int maxFuel, int consumption, String fuelId, ActivationType activationType, EquipmentSlot[] slots) {
+public record JetpackData(String id, double thrust, double maxYVelocity, int maxFuel, int consumption, String fuelId, ActivationType activationType, EquipmentSlot[] slots, JetpackEffect effect) {
 
     public boolean usesFuel(){
         return !fuelId.equalsIgnoreCase("false");

@@ -41,10 +41,11 @@ public class JetpackController {
         }
     }
 
-
+/*
     public void t(Player p){
         playEffect(p.getLocation().clone().add(0,1,0).add(p.getLocation().getDirection().setY(0).multiply(-0.2)));
     }
+ */
 
     /**
      * Attempts to begin thrust activation for the jetpack. If thrust is already activated,
@@ -98,15 +99,14 @@ public class JetpackController {
                 direction = direction.setY(Math.min(player.getVelocity().getY() + 0.08 * jetpack.thrust(), jetpack.maxYVelocity()));
                 player.setVelocity(direction);
                 f -= jetpack.consumption();
-                playEffect(player.getLocation().clone().add(0,1.25,0).add(direction.setY(0).multiply(-0.2)));
+                playEffect(jetpack, player.getLocation().clone().add(0,1.25,0).add(direction.setY(0).multiply(-0.2)));
                 player.playSound(player, Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, 1f,1f);
             }
         }.runTaskTimer(plugin, 1, 1);
         return true;
     }
 
-    private void playEffect(Location center){
-        final World world = center.getWorld();
+    private void playEffect(JetpackData jetpack, Location center){
         Location l = center.clone();
         double yaw = (-center.getYaw() + 180) * 0.017453292F;
         double rSin = Math.sin(yaw);
@@ -116,6 +116,7 @@ public class JetpackController {
                 double x = h/2 * cos[i];
                 double z = h/2 * sin[i];
                 double dy = - h;
+                // rotate point around y axis
                 double dx = x * rCos + z * rSin;
                 double dz = x * -rSin + z*rCos;
                 l.add(dx, dy, dz);
@@ -125,19 +126,14 @@ public class JetpackController {
                 else world.spawnParticle(Particle.SMOKE_NORMAL, l, 0);
 
                  */
-                world.spawnParticle(Particle.LAVA, l, 0);
+
+                //world.spawnParticle(Particle.LAVA, l, 0);
+                jetpack.effect().playParticle(l);
                 //System.out.println("coords:" + cos[i] + "," + h + "," + sin[i]);
                 l.subtract(dx, dy, dz);
             }
         }
     }
 
-    public Vector rotateAroundAxisY(Vector v, double angle) {
-        double cos = Math.cos(angle);
-        double sin = Math.sin(angle);
-        double x = v.getX() * cos + v.getZ() * sin;
-        double z = v.getX() * -sin + v.getZ() * cos;
-        return v.setX(x).setZ(z);
-    }
 
 }

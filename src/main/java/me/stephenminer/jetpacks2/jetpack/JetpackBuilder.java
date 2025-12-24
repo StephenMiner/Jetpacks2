@@ -9,6 +9,8 @@ import org.bukkit.Sound;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class JetpackBuilder {
@@ -55,7 +57,8 @@ public class JetpackBuilder {
                 slots[i] = EquipmentSlot.HAND;
             }
         }
-        return new JetpackData(jetpackId, thrust, maxYVel, maxFuel, consumption, fuelId, activationType, slots);
+        JetpackEffect effect = createEffect(file);
+        return new JetpackData(jetpackId, thrust, maxYVel, maxFuel, consumption, fuelId, activationType, slots, effect);
     }
 
     public JetpackEffect createEffect(ItemFile file){
@@ -102,6 +105,7 @@ public class JetpackBuilder {
             if (file.getConfig().contains("pitch"))
                 pitch = (float) file.getConfig().getDouble("pitch");
         }
+        Arrays.sort(particles, Comparator.comparingDouble(ParticleData::weight));
         return new JetpackEffect(sound, vol, pitch, hasSound, weighted, particles);
     }
 
