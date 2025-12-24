@@ -18,6 +18,7 @@ import org.bukkit.util.Vector;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class JetpackController {
     private final Jetpacks2 plugin;
@@ -97,7 +98,7 @@ public class JetpackController {
                 direction = direction.setY(Math.min(player.getVelocity().getY() + 0.08 * jetpack.thrust(), jetpack.maxYVelocity()));
                 player.setVelocity(direction);
                 f -= jetpack.consumption();
-                playEffect(player.getLocation().clone().add(0,1,0).add(direction.setY(0).multiply(-0.2)));
+                playEffect(player.getLocation().clone().add(0,1.25,0).add(direction.setY(0).multiply(-0.2)));
                 player.playSound(player, Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, 1f,1f);
             }
         }.runTaskTimer(plugin, 1, 1);
@@ -118,6 +119,12 @@ public class JetpackController {
                 double dx = x * rCos + z * rSin;
                 double dz = x * -rSin + z*rCos;
                 l.add(dx, dy, dz);
+                /*
+                if (ThreadLocalRandom.current().nextInt(3) <= 1)
+                    world.spawnParticle(Particle.FLAME, l, 0);
+                else world.spawnParticle(Particle.SMOKE_NORMAL, l, 0);
+
+                 */
                 world.spawnParticle(Particle.LAVA, l, 0);
                 //System.out.println("coords:" + cos[i] + "," + h + "," + sin[i]);
                 l.subtract(dx, dy, dz);

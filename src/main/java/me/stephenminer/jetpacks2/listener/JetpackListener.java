@@ -4,6 +4,7 @@ import me.stephenminer.jetpacks2.Jetpacks2;
 import me.stephenminer.jetpacks2.jetpack.ActivationType;
 import me.stephenminer.jetpacks2.jetpack.JetpackController;
 import me.stephenminer.jetpacks2.jetpack.JetpackData;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

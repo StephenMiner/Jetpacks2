@@ -14,3 +14,13 @@ consumption: 1
 thrust: 0.75
 max-y-velocity: 2
 uses-fuel: "minecraft:coal"
+effect:
+  weighted: true
+  particles:
+    - "FLAME,1,2"
+    - "SMOKE,1,1"
+  has-sound: true
+  sound: "minecraft:block.blastfurnace.fire_crackle"
+  vol: 1
+  pitch: 1
+
