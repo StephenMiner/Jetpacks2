@@ -17,7 +17,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 public class ItemBuilder {
@@ -128,9 +127,9 @@ public class ItemBuilder {
      * @param file - The ItemFile we're reading from
      */
     public void addInitJetpackData(ItemMeta meta, ItemFile file){
-        if (file.getConfig().contains("jetpack-id")){
-            PersistentDataContainer container = meta.getPersistentDataContainer();
-            container.set(plugin.itemId, PersistentDataType.STRING, file.getConfig().getString("jetpack-id"));
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+        container.set(plugin.itemId, PersistentDataType.STRING, file.fileName());
+        if (file.getConfig().contains("jetpack-item")){
             int fuel = 500;
             if (file.getConfig().contains("max-fuel"))
                 fuel = file.getConfig().getInt("max-fuel");
