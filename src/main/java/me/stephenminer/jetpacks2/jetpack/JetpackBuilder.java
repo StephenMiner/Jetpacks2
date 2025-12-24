@@ -21,11 +21,11 @@ public class JetpackBuilder {
     }
 
     public boolean hasJetpackData(ItemFile file){
-        return file.getConfig().contains("jetpack-id");
+        return file.getConfig().getBoolean("jetpack-item");
     }
 
     public JetpackData loadJetpackRecord(ItemFile file){
-        String jetpackId = file.getConfig().getString("jetpack-id");
+        String jetpackId = file.fileName();
         double thrust = 2;
         if (file.getConfig().contains("thrust"))
             thrust = file.getConfig().getDouble("thrust");
