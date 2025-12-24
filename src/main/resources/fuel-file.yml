@@ -1,0 +1,4 @@
+generic:
+  - "minecraft:coal,25"
+specific:
+  id: 25
