@@ -1,6 +1,7 @@
 package me.stephenminer.jetpacks2;
 
 import me.stephenminer.jetpacks2.commands.JetpackGive;
+import me.stephenminer.jetpacks2.commands.ReloadFiles;
 import me.stephenminer.jetpacks2.config.ConfigFile;
 import me.stephenminer.jetpacks2.config.ItemFile;
 import me.stephenminer.jetpacks2.jetpack.FuelData;
@@ -59,6 +60,7 @@ public final class Jetpacks2 extends JavaPlugin {
 
     private void addCommands(){
         this.getCommand("jetpackgive").setExecutor(new JetpackGive());
+        this.getCommand("jetpackreload").setExecutor(new ReloadFiles());
 
     }
 
