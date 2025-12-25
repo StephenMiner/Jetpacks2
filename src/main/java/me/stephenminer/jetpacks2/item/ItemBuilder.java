@@ -12,6 +12,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -134,7 +135,9 @@ public class ItemBuilder {
             if (file.getConfig().contains("max-fuel"))
                 fuel = file.getConfig().getInt("max-fuel");
             container.set(plugin.fuel, PersistentDataType.INTEGER, fuel);
+            ((Damageable) meta).setMaxDamage(fuel);
         }
+
     }
 
 

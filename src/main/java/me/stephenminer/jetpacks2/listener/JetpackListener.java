@@ -13,9 +13,11 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -82,6 +84,13 @@ public class JetpackListener implements Listener {
             player.playSound(player, Sound.ENTITY_BLAZE_SHOOT,1,1);
         }
 
+    }
+
+    @EventHandler
+    public void blockFlight(PlayerToggleFlightEvent event){
+        if (controller.usingJetpack(event.getPlayer())) {
+            event.setCancelled(true);
+        }
     }
 
 

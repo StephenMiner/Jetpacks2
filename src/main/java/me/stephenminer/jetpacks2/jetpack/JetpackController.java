@@ -2,12 +2,10 @@ package me.stephenminer.jetpacks2.jetpack;
 
 import me.stephenminer.jetpacks2.Jetpacks2;
 import org.bukkit.*;
-import org.bukkit.conversations.Conversation;
-import org.bukkit.conversations.ConversationFactory;
-import org.bukkit.conversations.Prompt;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -15,21 +13,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.*;
 
 public class JetpackController {
     private final Jetpacks2 plugin;
-    private final Set<UUID> activatedThrusters;
+    private final Map<UUID, ItemMeta> activatedThrusters;
+    private final Set<UUID> updateFuel;
 
     private final double[] sin, cos;
     private final int points;
 
     public JetpackController(){
         this.plugin = JavaPlugin.getPlugin(Jetpacks2.class);
-        this.activatedThrusters = new HashSet<>();
+        this.activatedThrusters = new HashMap<>();
+        this.updateFuel = new HashSet<>();
         this.points = 12;
         sin = new double[2*points + 1];
         cos = new double[2*points + 1];
@@ -60,12 +57,16 @@ public class JetpackController {
         int fuel = item.getItemMeta().getPersistentDataContainer().getOrDefault(plugin.fuel, PersistentDataType.INTEGER, jetpack.maxFuel());
         if (fuel <= 0)
             return false;
-        if (activatedThrusters.contains(player.getUniqueId())){
+        UUID uuid = player.getUniqueId();
+        if (activatedThrusters.containsKey(uuid)){
             player.sendMessage(ChatColor.YELLOW + "Deactivating activated jetpack!");
             activatedThrusters.remove(player.getUniqueId());
             return false;
         }
-        activatedThrusters.add(player.getUniqueId());
+        Damageable meta = (Damageable) item.getItemMeta();
+        meta.setMaxDamage(jetpack.maxFuel());
+        final PersistentDataContainer container = meta.getPersistentDataContainer();
+        activatedThrusters.put(uuid, meta);
         player.sendMessage(ChatColor.GREEN + "Jetpack activated");
         //player.get
        // player.sendMessage("" + player.getVelocity().getX() + "," + player.getVelocity().getZ());
@@ -73,23 +74,26 @@ public class JetpackController {
             int f = fuel; // necessary because that's jsut how it is :p.
             @Override
             public void run(){
-                if (f <= 0 || !activatedThrusters.contains(player.getUniqueId()) || player.isDead() || !player.isOnline()){
+                if (f <= 0 || !activatedThrusters.containsKey(player.getUniqueId()) || player.isDead() || !player.isOnline()){
                     this.cancel();
-                    ItemMeta update = item.getItemMeta();
-                    PersistentDataContainer container = update.getPersistentDataContainer();
                     container.set(plugin.fuel, PersistentDataType.INTEGER, f);
+                    item.setItemMeta(meta);
                     player.sendMessage(ChatColor.RED + "Jetpack deactivated");
+                    activatedThrusters.remove(uuid);
+                    player.setAllowFlight(false);
                     return;
                 }
                 if (!item.equals(player.getInventory().getItem(activationSlot))) {
                     player.sendMessage(ChatColor.RED + "Jetpack deactivated");
                     plugin.getLogger().info("Exit due to item inequality");
                     this.cancel();
-                    ItemMeta update = item.getItemMeta();
-                    PersistentDataContainer container = update.getPersistentDataContainer();
                     container.set(plugin.fuel, PersistentDataType.INTEGER, f);
+                    item.setItemMeta(meta);
+                    activatedThrusters.remove(uuid);
+                    player.setAllowFlight(false);
                     return;
                 }
+                player.setAllowFlight(true);
                 if (player.getVelocity().getX() != 0) System.out.println(player.getVelocity().getX());
                 //System.out.println(player.getVelocity().getX());
                 Vector direction = player.getLocation().getDirection().clone().setY(0).normalize();
@@ -98,9 +102,14 @@ public class JetpackController {
                 else direction = direction.multiply(0);
                 direction = direction.setY(Math.min(player.getVelocity().getY() + 0.08 * jetpack.thrust(), jetpack.maxYVelocity()));
                 player.setVelocity(direction);
+                f = getFuel(meta);
                 f -= jetpack.consumption();
+                container.set(plugin.fuel, PersistentDataType.INTEGER, f);
+                meta.setDamage(jetpack.maxFuel() - f);
+                item.setItemMeta(meta);
                 playEffect(jetpack, player.getLocation().clone().add(0,1.25,0).add(direction.setY(0).multiply(-0.2)));
                 player.playSound(player, Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, 1f,1f);
+
             }
         }.runTaskTimer(plugin, 1, 1);
         return true;
@@ -134,6 +143,15 @@ public class JetpackController {
             }
         }
     }
+
+    private int getFuel(ItemMeta meta){
+        return meta.getPersistentDataContainer().getOrDefault(plugin.fuel, PersistentDataType.INTEGER, -1);
+    }
+
+    public boolean usingJetpack(Player player){
+        return activatedThrusters.containsKey(player.getUniqueId());
+    }
+
 
 
 }
