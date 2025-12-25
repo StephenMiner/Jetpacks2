@@ -15,9 +15,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.util.*;
 
 public class JetpackGive implements CommandExecutor, TabCompleter {
     private final Jetpacks2 plugin;
@@ -84,6 +83,31 @@ public class JetpackGive implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args){
+        if (args.length == 1) return itemIds(args[0]);
         return null;
+    }
+
+
+
+    private List<String> filter(Collection<String> base, String match){
+        match = match.toLowerCase();
+        List<String> filtered = new ArrayList<>();
+        for (String entry : base){
+            String temp = ChatColor.stripColor(entry).toLowerCase();
+            if (temp.contains(match)) filtered.add(entry);
+        }
+        return filtered;
+    }
+
+    private List<String> itemIds(String match){
+        File root = new File(plugin.getDataFolder(), "items");
+        File[] files = root.listFiles();
+        List<String> itemIds = new ArrayList<>();
+        for (File file : files){
+            String name = file.getName();
+            if (name.contains(".yml"))
+                itemIds.add(name.replace(".yml",""));
+        }
+        return filter(itemIds, match);
     }
 }

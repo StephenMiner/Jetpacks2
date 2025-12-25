@@ -59,7 +59,9 @@ public final class Jetpacks2 extends JavaPlugin {
     }
 
     private void addCommands(){
-        this.getCommand("jetpackgive").setExecutor(new JetpackGive());
+        JetpackGive jetpackGive = new JetpackGive();
+        this.getCommand("jetpackgive").setExecutor(jetpackGive);
+        this.getCommand("jetpackgive").setTabCompleter(jetpackGive);
         this.getCommand("jetpackreload").setExecutor(new ReloadFiles());
 
     }
