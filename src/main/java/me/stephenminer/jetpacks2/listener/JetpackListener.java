@@ -11,9 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
-import org.bukkit.event.player.PlayerToggleFlightEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -93,6 +91,13 @@ public class JetpackListener implements Listener {
         }
     }
 
+    @EventHandler
+    public void blockDamage(PlayerItemDamageEvent event){
+        ItemStack item = event.getItem();
+        ItemMeta meta = item.getItemMeta();
+        if (hasJetpackId(meta)) event.setCancelled(true);
+    }
+
 
 
     private boolean activateJetpack(Player player, ActivationType type){
@@ -109,6 +114,13 @@ public class JetpackListener implements Listener {
             }
         }
         return false;
+    }
+
+    private boolean hasJetpackId(ItemMeta meta){
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+        if (!container.has(plugin.itemId, PersistentDataType.STRING)) return false;
+        String potentialId = container.get(plugin.itemId, PersistentDataType.STRING);
+        return plugin.jetpacks.containsKey(potentialId);
     }
 
     private boolean itemIsJetpack(ItemStack item, String jetpackId){
@@ -143,6 +155,9 @@ public class JetpackListener implements Listener {
         container.set(plugin.fuel, PersistentDataType.INTEGER, currentFuel + fuel.fillAmount());
         return true;
     }
+
+
+
 
 
 }
