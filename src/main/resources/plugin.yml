@@ -1,6 +1,6 @@
 name: Jetpacks2
 version: '1.0-SNAPSHOT'
 main: me.stephenminer.jetpacks2.Jetpacks2
-api-version: '1.18'
+api-version: '1.20.5'
 commands:
   jetpackgive:
