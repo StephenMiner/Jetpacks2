@@ -159,6 +159,8 @@ public class JetpackListener implements Listener {
         int currentFuel = container.get(plugin.fuel, PersistentDataType.INTEGER);
         if (currentFuel + fuel.fillAmount() >= jetpack.maxFuel()) return false;
         container.set(plugin.fuel, PersistentDataType.INTEGER, currentFuel + fuel.fillAmount());
+        ((Damageable) jetpackMeta).setMaxDamage(jetpack.maxFuel());
+        ((Damageable) jetpackMeta).setDamage(Math.max(0, jetpack.maxFuel() - container.get(plugin.fuel, PersistentDataType.INTEGER)));
         return true;
     }
 

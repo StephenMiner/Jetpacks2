@@ -45,8 +45,8 @@ public class JetpackBuilder {
         if (file.getConfig().contains("activation-type"))
             activationType = ActivationType.valueOf(file.getConfig().getString("activation-type").toUpperCase());
         String fuelId =  "minecraft:blaze_powder";
-        if (file.getConfig().contains("fuel-id"))
-            fuelId = file.getConfig().getString("fuel-id");
+        if (file.getConfig().contains("uses-fuel"))
+            fuelId = file.getConfig().getString("uses-fuel");
         List<String> slotStrs = file.getConfig().getStringList("slots");
         EquipmentSlot[] slots = new EquipmentSlot[slotStrs.size()];
         for (int i = 0; i < slotStrs.size(); i++){
