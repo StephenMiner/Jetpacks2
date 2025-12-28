@@ -11,6 +11,7 @@ slots:
 max-fuel: 500
 consumption: 1
 thrust: 1.25
+horizontal-velocity: 0.2
 max-y-velocity: 2
 uses-fuel: "minecraft:coal"
 effect:

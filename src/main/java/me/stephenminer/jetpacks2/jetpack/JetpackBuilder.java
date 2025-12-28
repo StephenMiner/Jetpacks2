@@ -32,6 +32,9 @@ public class JetpackBuilder {
         double maxYVel = 2;
         if (file.getConfig().contains("max-y-velocity"))
             maxYVel = file.getConfig().getDouble("max-y-velocity");
+        double horizontalVel = 0.2d;
+        if (file.getConfig().contains("horizontal-velocity"))
+            horizontalVel = file.getConfig().getDouble("horizontal-velocity");
         int maxFuel = 500;
         if (file.getConfig().contains("max-fuel"))
             maxFuel = file.getConfig().getInt("max-fuel");
@@ -58,7 +61,7 @@ public class JetpackBuilder {
             }
         }
         JetpackEffect effect = createEffect(file);
-        return new JetpackData(jetpackId, thrust, maxYVel, maxFuel, consumption, fuelId, activationType, slots, effect);
+        return new JetpackData(jetpackId, thrust, maxYVel, horizontalVel, maxFuel, consumption, fuelId, activationType, slots, effect);
     }
 
     public JetpackEffect createEffect(ItemFile file){

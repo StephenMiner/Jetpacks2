@@ -59,7 +59,7 @@ public class JetpackController {
             return false;
         UUID uuid = player.getUniqueId();
         if (activatedThrusters.containsKey(uuid)){
-            player.sendMessage(ChatColor.YELLOW + "Deactivating activated jetpack!");
+          //  player.sendMessage(ChatColor.YELLOW + "Deactivating activated jetpack!");
             activatedThrusters.remove(player.getUniqueId());
             return false;
         }
@@ -94,7 +94,6 @@ public class JetpackController {
                     return;
                 }
                 player.setAllowFlight(true);
-                if (player.getVelocity().getX() != 0) System.out.println(player.getVelocity().getX());
                 //System.out.println(player.getVelocity().getX());
                 Vector direction = player.getLocation().getDirection().clone().setY(0).normalize();
                 if (!player.isOnGround())
@@ -107,7 +106,7 @@ public class JetpackController {
                 container.set(plugin.fuel, PersistentDataType.INTEGER, f);
                 meta.setDamage(jetpack.maxFuel() - f);
                 item.setItemMeta(meta);
-                playEffect(jetpack, player.getLocation().clone().add(0,1.25,0).add(direction.setY(0).multiply(-0.2)));
+                playEffect(jetpack, player.getLocation().clone().add(0,1.25,0).add(direction.setY(0).multiply(-0.4)));
                 player.playSound(player, Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, 1f,1f);
 
             }

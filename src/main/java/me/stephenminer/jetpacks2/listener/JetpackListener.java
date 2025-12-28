@@ -5,6 +5,7 @@ import me.stephenminer.jetpacks2.jetpack.ActivationType;
 import me.stephenminer.jetpacks2.jetpack.FuelData;
 import me.stephenminer.jetpacks2.jetpack.JetpackController;
 import me.stephenminer.jetpacks2.jetpack.JetpackData;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -74,12 +75,17 @@ public class JetpackListener implements Listener {
             FuelData fuel = findFuelData(cursor);
             if (fuel == null) return;
             JetpackData jetpack = plugin.jetpacks.get(jetpackId);
+            if (!jetpack.fuelId().equalsIgnoreCase(fuel.id())){
+                Material mat = plugin.materialFromString(jetpack.fuelId());
+                if (!mat.getKey().toString().equalsIgnoreCase(fuel.id())) return;
+            }
             boolean usedFuel = refuelJetpack(meta, fuel, jetpack);
             if (!usedFuel) return;
             item.setItemMeta(meta);
             cursor.setAmount(cursor.getAmount() - 1);
             Player player = (Player) event.getWhoClicked();
             player.playSound(player, Sound.ENTITY_BLAZE_SHOOT,1,1);
+            event.setCancelled(true);
         }
 
     }
