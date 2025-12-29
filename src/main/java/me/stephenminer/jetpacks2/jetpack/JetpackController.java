@@ -85,7 +85,7 @@ public class JetpackController {
                 }
                 if (!item.equals(player.getInventory().getItem(activationSlot))) {
                     player.sendMessage(ChatColor.RED + "Jetpack deactivated");
-                    plugin.getLogger().info("Exit due to item inequality");
+                   // plugin.getLogger().info("Exit due to item inequality");
                     this.cancel();
                     container.set(plugin.fuel, PersistentDataType.INTEGER, f);
                     item.setItemMeta(meta);
