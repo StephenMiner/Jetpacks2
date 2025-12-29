@@ -1,24 +1,23 @@
-name: "#8a42f5Example Jetpack"
+name: "#8a42f5Jetpack"
 material: "minecraft:phantom_membrane"
 lore:
-  - "#4287f5Right Click to toggle on/off"
+  - "#4287f5Right-Click to toggle on/off"
 attributes:
   - "generic.armor,10,hand"
 jetpack-item: true
 activation-type: "right_click"
 slots:
   - "hand"
-max-fuel: 500
+max-fuel: 3000
 consumption: 1
 thrust: 1.25
-horizontal-velocity: 0.2
+horizontal-velocity: 0.3
 max-y-velocity: 2
 uses-fuel: "minecraft:coal"
 effect:
-  weighted: true
+  weighted: false
   particles:
-    - "FLAME,0,2"
-    - "SMOKE_NORMAL,0,1"
+    - "LAVA,0,-1"
   has-sound: true
   sound: "minecraft:block.blastfurnace.fire_crackle"
   vol: 1
