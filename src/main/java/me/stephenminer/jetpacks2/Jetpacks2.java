@@ -8,23 +8,24 @@ import me.stephenminer.jetpacks2.jetpack.FuelData;
 import me.stephenminer.jetpacks2.jetpack.JetpackBuilder;
 import me.stephenminer.jetpacks2.jetpack.JetpackData;
 import me.stephenminer.jetpacks2.listener.JetpackListener;
+import me.stephenminer.jetpacks2.recipe.RecipeConstructor;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
+import org.bukkit.inventory.Recipe;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nullable;
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class Jetpacks2 extends JavaPlugin {
+    public Set<NamespacedKey> recipeKeys;
     public Map<String, FuelData> fuelDataMap;
     public static Pattern HEX_PATTERN = Pattern.compile("(#[A-Fa-f0-9]{6})");
     public Map<String, JetpackData> jetpacks;
@@ -36,6 +37,7 @@ public final class Jetpacks2 extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        this.recipeKeys = new HashSet<>();
         this.itemId = new NamespacedKey(this, "id");
         this.jetpacks = new HashMap<>();
         this.fuel = new NamespacedKey(this, "fuel");
@@ -44,6 +46,7 @@ public final class Jetpacks2 extends JavaPlugin {
         constructFuelData();
         registerListeners();
         addCommands();
+        registerRecipes();
         // Plugin startup logic
 
     }
@@ -64,6 +67,33 @@ public final class Jetpacks2 extends JavaPlugin {
         this.getCommand("jetpackgive").setTabCompleter(jetpackGive);
         this.getCommand("jetpackreload").setExecutor(new ReloadFiles());
 
+    }
+
+    public void registerRecipes(){
+        File itemDirectory = new File(this.getDataFolder(), "items");
+        boolean pass = itemDirectory.exists();
+        if (!pass) {
+            pass = itemDirectory.mkdirs();
+            this.saveResource("items/test.yml",true);
+            this.saveResource("items/test-fuel.yml", true);
+        }
+        if (!pass){
+            this.getLogger().warning("Something went wrong loading items directory");
+            return;
+        }
+        for (NamespacedKey key : this.recipeKeys){
+            Bukkit.removeRecipe(key);
+        }
+        this.recipeKeys.clear();
+        File[] files = itemDirectory.listFiles();
+        if (files == null) return;
+        for (File file : files){
+            if (!file.getName().contains(".yml")) continue;
+            RecipeConstructor builder = new RecipeConstructor(file.getName().replace(".yml", ""));
+            Recipe recipe = builder.construct();
+            if (recipe == null) continue;
+            Bukkit.addRecipe(recipe);
+        }
     }
 
 
@@ -167,5 +197,12 @@ public final class Jetpacks2 extends JavaPlugin {
             FuelData data = new FuelData(false, key, fill);
             fuelDataMap.put(data.id(), data);
         }
+    }
+
+    public boolean itemFileExists(String fileName){
+        File root = new File(this.getDataFolder(), "items");
+        if (!root.exists()) return false;
+        File child = new File(root, fileName + ".yml");
+        return child.exists();
     }
 }

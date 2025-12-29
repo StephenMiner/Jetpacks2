@@ -23,6 +23,7 @@ public class ReloadFiles implements CommandExecutor {
         plugin.fuelFile.reloadConfig();
         plugin.createJetpackRecords();
         plugin.constructFuelData();
+        plugin.registerRecipes();
         sender.sendMessage(ChatColor.GREEN + "reloaded all plugin config files!");
         return true;
     }

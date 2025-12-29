@@ -23,4 +23,8 @@ effect:
   sound: "minecraft:block.blastfurnace.fire_crackle"
   vol: 1
   pitch: 1
+recipe:
+  - "-,minecraft:iron_ingot,-"
+  - "minecraft:redstone,minecraft:diamond_chestplate,minecraft:redstone"
+  - "-,minecraft:redstone_torch,-"
 
