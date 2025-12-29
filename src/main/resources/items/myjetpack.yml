@@ -23,7 +23,7 @@ effect:
   vol: 1
   pitch: 1
 recipe:
-  - "-,minecraft:iron_ingot,-"
+  - "-,minecraft:diamond,-"
   - "minecraft:redstone,minecraft:flint_and_steel,minecraft:redstone"
   - "-,minecraft:redstone_torch,-"
 
