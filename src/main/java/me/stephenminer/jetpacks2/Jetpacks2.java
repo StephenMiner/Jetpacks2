@@ -167,7 +167,7 @@ public final class Jetpacks2 extends JavaPlugin {
         try {
             mat = Registry.MATERIAL.get(NamespacedKey.minecraft(str.toLowerCase().trim()));
         }catch (Exception e){
-            this.getLogger().info("Failed to get minecraft namespace for " + str +  ", attempting generic namespace generation");
+            //this.getLogger().info("Failed to get minecraft namespace for " + str +  ", attempting generic namespace generation");
         }
         if (mat == null){
             NamespacedKey key = NamespacedKey.fromString(str);
