@@ -35,6 +35,10 @@ effect:
   sound: "minecraft:block.blastfurnace.fire_crackle"
   vol: 1
   pitch: 1
+recipe:
+  - "-,minecraft:iron_ingot,-"
+  - "minecraft:redstone,minecraft:diamond_chestplate,minecraft:redstone"
+  - "-,minecraft:redstone_torch,-"
 ```  
 The first field ```name``` refers to the name that the jetpack item will have when given to a player. You can use hexcoded preceeded by a '#' and regular color codes.  
   
@@ -77,7 +81,18 @@ The ```sound``` field determines the sound to play if ```has-sound``` was true. 
 The ```volume``` field determines the volume of this sound  
   
 The ```pitch``` field determines the pitch of the sound.
-  
+
+# Recipe
+Following the recipe section from the file above, we have this:
+```yaml
+recipe:
+  - "-,minecraft:iron_ingot,-"
+  - "minecraft:redstone,minecraft:diamond_chestplate,minecraft:redstone"
+  - "-,minecraft:redstone_torch,-"
+```
+This entry represents a shaped recipe. Where you want to put ingredients, you simply put in the material name as shown above, or if you want to use an item you've made through this plugin, you can put the item's file name as well. If you want to represent a blank slot, simply put a dash '-'.
+
+# Fuel
 If you don't include the ```jetpack-item``` field in your file, the file is then treated as a fuel item, whose name (minus the .yml) may be placed in the fuel-file.yml file that looks like so:  
 ```yaml
 generic:
@@ -88,6 +103,8 @@ specific:
 In the generic section, you add entries where the first part is a material in minecraft, and the second is how many fuel points this item gives.  
   
 In the specific section, you put the name of a ".yml" file in the items folder without the .yml part that defines a non-jetpack item. The number after this name represents the amount of fuel this item gives.  
+  
+
 
 # Commands
 /jetpackgive <jetpack-id> <player> <amount>  
