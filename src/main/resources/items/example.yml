@@ -1,13 +1,13 @@
-name: "test"
+name: "#8a42f5Example Jetpack"
 material: "minecraft:phantom_membrane"
 lore:
-  - "Click to toggle on/off"
+  - "#4287f5Click to toggle on/off"
 attributes:
-  - "generic.armor,10,hand"
+  - "generic.armor,10,MAINHAND"
 jetpack-item: true
 activation-type: "right_click"
 slots:
-  - "hand"
+  - "MAINHAND"
 max-fuel: 500
 consumption: 1
 thrust: 1.25
@@ -25,6 +25,6 @@ effect:
   pitch: 1
 recipe:
   - "-,minecraft:iron_ingot,-"
-  - "minecraft:redstone,minecraft:diamond_chestplate,minecraft:redstone"
+  - "minecraft:redstone,minecraft:flint_and_steel,minecraft:redstone"
   - "-,minecraft:redstone_torch,-"
 
