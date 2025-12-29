@@ -4,6 +4,8 @@ Tested Versions:
 Java 21  
   
 This plugin allows you to add many different jetpacks to your game! Nearly everything is customizable (besides the shape of the particle effect). You can define the vertical thrust, horizontal velocity, acceptable fuel, etc. All kinds of things!  
+
+By the way, in order to refuel a jetpack, simply click the jetpack item while the approprite fuel item is held in your cursor while your inventory is open.
   
 # How to create a jetpack type
 To get started with creating jetpacks, you basically create new ".yml" files in the items folder within this plugin's data-folder. Please don't put any spaces in this file name, and keep in mind these names are case sensitive. You can rename this file later, but items created from this file previously will no longer function as jetpacks.  
