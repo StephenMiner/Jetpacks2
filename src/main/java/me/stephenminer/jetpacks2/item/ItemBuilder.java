@@ -51,9 +51,9 @@ public class ItemBuilder {
         }
         EquipmentSlot slot;
         try {
-            slot = EquipmentSlot.valueOf(unbox[2]);
+            slot = EquipmentSlot.valueOf(unbox[2].toUpperCase());
         }catch (Exception e){
-            plugin.getLogger().warning("ItemBuilder error: parseAttribute(): Failed to read EquipmentSlot from " + unbox[2] + ". Defaulting to MAINHAND");
+            plugin.getLogger().warning("ItemBuilder error: parseAttribute(): Failed to read EquipmentSlot from " + unbox[2] + ". Defaulting to HAND");
             slot = EquipmentSlot.HAND;
         }
         AttributeModifier modifier = new AttributeModifier(UUID.randomUUID(), attribute.getKey().getKey(), mod ,AttributeModifier.Operation.ADD_NUMBER, slot);
