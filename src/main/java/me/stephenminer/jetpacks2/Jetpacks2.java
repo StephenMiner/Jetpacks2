@@ -75,6 +75,7 @@ public final class Jetpacks2 extends JavaPlugin {
         if (!pass) {
             pass = itemDirectory.mkdirs();
             this.saveResource("items/example.yml",true);
+            this.saveResource("items/myjetpack.yml",true);
             this.saveResource("items/test-fuel.yml", true);
         }
         if (!pass){
@@ -104,6 +105,7 @@ public final class Jetpacks2 extends JavaPlugin {
         if (!pass) {
             pass = itemDirectory.mkdirs();
             this.saveResource("items/example.yml",true);
+            this.saveResource("items/myjetpack.yml",true);
             this.saveResource("items/test-fuel.yml", true);
         }
         if (!pass){
