@@ -3,11 +3,11 @@ material: "minecraft:phantom_membrane"
 lore:
   - "#4287f5Click to toggle on/off"
 attributes:
-  - "generic.armor,10,MAINHAND"
+  - "generic.armor,10,hand"
 jetpack-item: true
 activation-type: "right_click"
 slots:
-  - "MAINHAND"
+  - "hand"
 max-fuel: 500
 consumption: 1
 thrust: 1.25
